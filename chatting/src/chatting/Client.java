@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.channels.NetworkChannel;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -67,11 +71,13 @@ public class Client extends JFrame implements ActionListener {
 	private Socket socket;
 	private String ip;
 	private int port;
-	private String userID;
+	private String userId;
 	private InputStream inputStream;
 	private OutputStream outputStream;
 	private DataInputStream dataInputStream;
 	private DataOutputStream dataOutputStream;
+
+	private Vector<String> userVectorList = new Vector<String>();
 
 	public Client() {
 		init();
@@ -160,9 +166,9 @@ public class Client extends JFrame implements ActionListener {
 		totalRoomLabel.setBounds(209, 27, 102, 15);
 		waitingRoomPanel.add(totalRoomLabel);
 
-		totalRoomList = new JList();
-		totalRoomList.setBounds(12, 69, 102, 257);
-		waitingRoomPanel.add(totalRoomList);
+		totalUserList = new JList();
+		totalUserList.setBounds(12, 69, 102, 257);
+		waitingRoomPanel.add(totalUserList);
 
 		totalRoomList = new JList();
 		totalRoomList.setBounds(209, 69, 102, 257);
@@ -247,13 +253,13 @@ public class Client extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == connectButton) {
 			System.out.println("connectButton Click");
-			if(hostIPTextField.getText().length() == 0) {
+			if (hostIPTextField.getText().length() == 0) {
 				hostIPTextField.setText("IP를 입력하세요");
 				hostIPTextField.requestFocus();
-			} else if(serverPortTextField.getText().length() == 0) {
+			} else if (serverPortTextField.getText().length() == 0) {
 				serverPortTextField.setText("포트번호를 입력하세요");
 				serverPortTextField.requestFocus();
-			} else if(userIDTextField.getText().length() == 0) {
+			} else if (userIDTextField.getText().length() == 0) {
 				userIDTextField.setText("ID를 입력하세요");
 				userIDTextField.requestFocus();
 			} else {
@@ -263,11 +269,11 @@ public class Client extends JFrame implements ActionListener {
 				} catch (Exception e2) {
 					serverPortTextField.setText("잘못 입력하였습니다.");
 				}
-				userID = userIDTextField.getText().trim();
+				userId = userIDTextField.getText().trim();
 				connectServer();
-				setTitle("[" + userID + " ] 님 밍스톡에 오신걸 환경합니다.");
+				setTitle("[" + userId + " ] 님 밍스톡에 오신걸 환경합니다.");
 			}
-			
+
 		} else if (e.getSource() == sendNoteButton) {
 			System.out.println("sendMessageButton Click");
 		} else if (e.getSource() == sendMessageButton) {
@@ -287,10 +293,80 @@ public class Client extends JFrame implements ActionListener {
 	private void connectServer() {
 		try {
 			socket = new Socket(ip, port);
+			network();
 		} catch (Exception e) {
+			//System.out.println("client create socket exception");
+			System.out.println(e);
 		}
 	}
 
+	private void network() {
+		try {
+			inputStream = socket.getInputStream();
+			dataInputStream = new DataInputStream(inputStream);
+			outputStream = socket.getOutputStream();
+			dataOutputStream = new DataOutputStream(outputStream);
+
+			sendMessage(userId);
+
+			userVectorList.add(userId);
+			totalUserList.setListData(userVectorList);
+			Thread thread = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					while (true) {
+						try {
+							String message = dataInputStream.readUTF();
+							inMessage(message);
+						} catch (Exception e) {
+							System.out.println("network exception");
+						}
+					}
+
+				}
+			});
+			thread.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	private void inMessage(String str) {
+		StringTokenizer stringTokenizer = new StringTokenizer(str, "/");
+		String protocol = stringTokenizer.nextToken();
+		String message = stringTokenizer.nextToken();
+
+		if (protocol.equals("NewUser")) {
+			userVectorList.add(message);
+			totalUserList.setListData(userVectorList);
+			System.out.println(str);
+			for (int i = 0; i < userVectorList.size(); i++) {
+				System.out.println("NewUserProtocol : "+ userVectorList.elementAt(i) + "\n");
+			}
+
+		} else if (protocol.equals("OldUser")) {
+			userVectorList.add(message);
+			totalUserList.setListData(userVectorList);
+			System.out.println(str);
+			for (int i = 0; i < userVectorList.size(); i++) {
+				System.out.println("OldUserProtocol : "+ userVectorList.elementAt(i) + "\n");
+			}
+		}
+	}
+
+	private void sendMessage(String message) {
+		try {
+			dataOutputStream.writeUTF(message);
+			dataOutputStream.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 	public static void main(String[] args) {
 		new Client();
