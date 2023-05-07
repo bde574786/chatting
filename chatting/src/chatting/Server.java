@@ -271,6 +271,18 @@ public class Server extends JFrame implements ActionListener {
 					}
 				}
 			}
+			else if(protocol.equals("Chatting"))
+			{
+				String msg = stringTokenizer.nextToken();
+				for(int i = 0; i<roomVectorList.size(); i++)
+				{
+					RoomInformation roomInfo = roomVectorList.elementAt(i);
+					if(roomInfo.roomName.equals(message))
+					{
+						roomInfo.roomBroadcast("Chatting/"+userId+"/"+msg);
+					}
+				}
+			}
 		}
 
 		private void sendMessage(String message) {
