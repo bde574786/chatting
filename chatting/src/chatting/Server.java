@@ -276,6 +276,7 @@ public class Server extends JFrame implements ActionListener {
 						roomInfo.addUser(this);
 						roomInfo.roomBroadcast("Chatting/[[알림]]/(((" + userId + " 입장))) ");
 						sendMessage("JoinRoom/" + message);
+
 					}
 				}
 
