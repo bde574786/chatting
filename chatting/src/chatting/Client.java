@@ -303,6 +303,7 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 			public void mouseClicked(MouseEvent e) {
 				backButton.setIcon(coloredIcon);
 				removeTopPanel();
+				backButton.setIcon(backbuttonImageIcon);
 			}
 
 			@Override
@@ -526,6 +527,7 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 			// viewChatTextArea.setText("");
 		} else if (protocol.equals("Chatting")) {
 			String msg = stringTokenizer.nextToken();
+			
 			viewChatTextArea.append(message + " : " + msg + "\n");
 		} else if (protocol.equals("LeaveRoom")) {
 			viewChatTextArea.append("*** (( " + myRoomName + "에서 퇴장 ))***\n");
