@@ -580,11 +580,11 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 	        );
 			
 			if(result == JOptionPane.OK_OPTION) {
-							myRoomNameList.remove(myCurrentRoomName);
+				System.out.println("okoption");
+				sendMessage("LeaveRoomOK/" + userId);
+				myRoomNameList.remove(myCurrentRoomName);
 				removeTopPanel();
 				viewChatTextArea.setText("");
-				//viewChatTextArea.append("*** (( " + myRoomName + "에서 퇴장 ))***\n");
-				// myRoomName = null;
 				createRoomButton.setEnabled(true);
 				leaveRoomButton.setEnabled(false);
 			}
