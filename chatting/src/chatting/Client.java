@@ -581,7 +581,7 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 			
 			if(result == JOptionPane.OK_OPTION) {
 				System.out.println("okoption");
-				sendMessage("LeaveRoomOK/" + userId);
+				sendMessage("LeaveRoomOK/" + myCurrentRoomName);
 				myRoomNameList.remove(myCurrentRoomName);
 				removeTopPanel();
 				viewChatTextArea.setText("");
