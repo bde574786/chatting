@@ -1,7 +1,8 @@
 package chatting;
-
-import java.awt.Color;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.Color;
+import java.awt.FontFormatException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -10,9 +11,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -104,6 +108,7 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 
 	private void init() {
 
+
 		// 메인 패널
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 400, 520);
@@ -192,22 +197,70 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 
 		totalUserLabel = new JLabel("전체접속자");
 		totalUserLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		totalUserLabel.setFont(new Font("Dongle", Font.BOLD, 13));
+		//totalUserLabel.setFont(new Font("Dongle", Font.BOLD, 13));
 		totalUserLabel.setBounds(29, 95, 102, 15);
 		waitingRoomPanel.add(totalUserLabel);
 
+		try {
+	         InputStream inputStream = new BufferedInputStream(new FileInputStream("images/배스킨라빈스 R.ttf"));
+	         Font font = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+	         totalUserLabel.setFont(font.deriveFont(Font.BOLD, 16f));
+	      } catch (FontFormatException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+		
 		totalRoomLabel = new JLabel("방 리스트");
 		totalRoomLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		totalRoomLabel.setFont(new Font("Dongle", Font.BOLD, 13));
 		totalRoomLabel.setBounds(224, 95, 102, 15);
 		waitingRoomPanel.add(totalRoomLabel);
-
+		try {
+	         InputStream inputStream = new BufferedInputStream(new FileInputStream("images/배스킨라빈스 R.ttf"));
+	         Font font = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+	         totalRoomLabel.setFont(font.deriveFont(Font.BOLD, 16f));
+	      } catch (FontFormatException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+		
 		totalUserList = new JList();
 		totalUserList.setBounds(20, 125, 120, 257);
 		waitingRoomPanel.add(totalUserList);
-
+		try {
+			InputStream inputStream = new BufferedInputStream(new FileInputStream("images/배스킨라빈스 R.ttf"));
+			Font font = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+			totalUserList.setFont(font.deriveFont(Font.BOLD, 14f));
+		} catch (FontFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		totalRoomList = new JList();
 		totalRoomList.setBounds(180, 125, 188, 257);
+		try {
+	         InputStream inputStream = new BufferedInputStream(new FileInputStream("images/배스킨라빈스 R.ttf"));
+	         Font font = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+	         totalRoomList.setFont(font.deriveFont(Font.BOLD, 14f));
+	      } catch (FontFormatException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } catch (IOException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }
+		
+		
+		
 		waitingRoomPanel.add(totalRoomList);
 
 		sendNoteButton = new JButton("쪽지보내기");
@@ -437,6 +490,7 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 		}
 
 	}
+
 	private void checkLeaveRoom() {
 		int result = JOptionPane.showOptionDialog(null, "정말 나가시겠습니까?", "Warning", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.WARNING_MESSAGE, null, new String[] { "확인", "취소" }, "확인");
@@ -451,6 +505,7 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 			leaveRoomButton.setEnabled(false);
 		}
 	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -580,8 +635,6 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 
 			viewChatTextArea.append(message + " : " + msg + "\n");
 		} else if (protocol.equals("LeaveRoom")) {
-
-			
 
 		} else if (protocol.equals("EmptyRoom")) {
 			roomVectorList.remove(message);
