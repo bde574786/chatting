@@ -216,7 +216,7 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 		waitingRoomPanel.add(userListPanel);
 
 		currentUserLabel = new JLabel();
-		currentUserLabel.setBounds(22, 100, 60, 20);
+		currentUserLabel.setBounds(37, 100, 60, 20);
 		setFont(currentUserLabel, Font.PLAIN, 18f);
 		userListPanel.add(currentUserLabel);
 
