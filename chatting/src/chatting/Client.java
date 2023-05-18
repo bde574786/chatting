@@ -6,6 +6,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FontFormatException;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -45,6 +46,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -67,7 +69,7 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 
 	private JPanel waitingRoomPanel;
 	private JPanel userListPanel;
-	private JLabel totalUserLabel;
+	private JLabel currentUserLabel;
 	private JLabel totalRoomLabel;
 	private JScrollPane roomListScroll;
 	private JList totalUserList; // 전체접속자 리스트
@@ -108,8 +110,7 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 		init();
 		serverPortTextField.setText("1");
 		userIDTextField.setText("user1");
-
-		// mainPanel.add(waitingRoomPanel);
+		hostIPTextField.setText("127.0.0.1");
 		addListener();
 	}
 
@@ -154,7 +155,6 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 		hostIPTextField = new JTextField();
 		hostIPTextField.setBounds(180, 305, 150, 20);
 		hostIPTextField.setColumns(10);
-		hostIPTextField.setText("127.0.0.1");
 		loginPanel.add(hostIPTextField);
 
 		serverPortLabel = new JLabel("SERVER_PORT");
@@ -198,65 +198,19 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 		userListPanel = new JPanel();
 		userListPanel.setBackground(new Color(236, 236, 236));
 		userListPanel.setBounds(0, 0, 127, 480);
+		userListPanel.setLayout(null);
 		waitingRoomPanel.add(userListPanel);
 
-		totalUserLabel = new JLabel("전체접속자");
-		totalUserLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		totalUserLabel.setBounds(29, 95, 102, 15);
-		// waitingRoomPanel.add(totalUserLabel);
+		currentUserLabel = new JLabel();
+		currentUserLabel.setBounds(40, 100, 60, 20);
+		setFont(currentUserLabel, Font.BOLD, 18f);
+		userListPanel.add(currentUserLabel);
 
-		try {
-			InputStream inputStream = new BufferedInputStream(new FileInputStream("fonts/배스킨라빈스 R.ttf"));
-			Font font = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-			totalUserLabel.setFont(font.deriveFont(Font.BOLD, 16f));
-		} catch (FontFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		totalRoomLabel = new JLabel("채팅");
-		totalRoomLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		totalRoomLabel.setBounds(148, 63, 40, 17);
-		waitingRoomPanel.add(totalRoomLabel);
-		try {
-			InputStream inputStream = new BufferedInputStream(new FileInputStream("fonts/배스킨라빈스 R.ttf"));
-			Font font = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-			totalRoomLabel.setFont(font.deriveFont(Font.BOLD, 18f));
-		} catch (FontFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-ddddddddddddddddd
-		roomListScroll = new JScrollPane();
-		roomListScroll.setBounds(150, 100, 230, 100);
-		roomListScroll.setBackground(Color.white);
-		// roomListScroll.setPreferredSize(roomListScroll.getPreferredSize());
-		JViewport viewport = roomListScroll.getViewport();
-		viewport.setBackground(Color.white);
-
-		totalRoomList = new JList();
-		totalRoomList.setBackground(Color.white);
-		totalRoomList.setBounds(0, 0, 200, 257);
-		try {
-			InputStream inputStream = new BufferedInputStream(new FileInputStream("fonts/배스킨라빈스 R.ttf"));
-			Font font = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-			totalRoomList.setFont(font.deriveFont(Font.BOLD, 14f));
-		} catch (FontFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// totalRoomList.setLayoutOrientation(JList.VERTICAL);
-		viewport.add(totalRoomList);
-		waitingRoomPanel.add(roomListScroll);
+		totalUserList = new JList();
+		totalUserList.setBounds(20, 160, 90, 257);
+		totalUserList.setBackground(new Color(0, 0, 0, 0));
+		setFont(totalUserList, Font.BOLD, 16f);
+		userListPanel.add(totalUserList);
 
 		sendNoteButton = new JButton("쪽지보내기");
 		sendNoteButton.setBounds(29, 395, 102, 23);
@@ -264,11 +218,30 @@ ddddddddddddddddd
 		sendNoteButton.setForeground(new Color(15, 64, 41));
 		// waitingRoomPanel.add(sendNoteButton);
 
+		totalRoomLabel = new JLabel("채팅");
+		totalRoomLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		totalRoomLabel.setBounds(148, 63, 40, 17);
+		waitingRoomPanel.add(totalRoomLabel);
+		setFont(totalRoomLabel, Font.BOLD, 16f);
+
+		totalRoomList = new JList();
+		totalRoomList.setBackground(Color.white);
+		totalRoomList.setBounds(0, 0, 200, 257);
+		setFont(totalRoomList, Font.BOLD, 16f);
+
+		roomListScroll = new JScrollPane();
+		roomListScroll.setBounds(150, 100, 230, 285);
+		roomListScroll.setBackground(Color.white);
+		roomListScroll.setBorder(null);
+		waitingRoomPanel.add(roomListScroll);
+		JViewport viewport = roomListScroll.getViewport();
+		viewport.setBackground(Color.white);
+		viewport.add(totalRoomList);
+
 		joinRoomButton = new JButton("채팅방참여");
 		joinRoomButton.setBounds(180, 395, 102, 23);
 		joinRoomButton.setBackground(new Color(255, 223, 136));
 		joinRoomButton.setForeground(new Color(15, 64, 41));
-
 		joinRoomButton.setEnabled(false);
 		// waitingRoomPanel.add(joinRoomButton);
 
@@ -279,7 +252,6 @@ ddddddddddddddddd
 		createRoomButton.setForeground(new Color(69, 69, 69));
 		createRoomButton.setBorder(null);
 		createRoomButton.setFocusPainted(false);
-		// createRoomButton.setEnabled(false);
 		createRoomButton.setRolloverEnabled(false);
 		createRoomButton.setContentAreaFilled(false);
 		waitingRoomPanel.add(createRoomButton);
@@ -327,13 +299,9 @@ ddddddddddddddddd
 		coloredIcon = new ImageIcon("images/coloredArrow.png");
 
 		backButton = new JButton(backbuttonImageIcon);
-
 		backButton.setBounds(10, 21, 30, 30);
-		// backButton.setOpaque(false);
 		backButton.setBorderPainted(false);
 		backButton.setContentAreaFilled(false);
-		// backButton.setFocusPainted(false);
-		// backButton.setBackground(new Color(1, 1, 1, 0));
 		chattingPanel.add(backButton);
 
 		setVisible(true);
@@ -413,6 +381,8 @@ ddddddddddddddddd
 				try {
 					port = Integer.parseInt(serverPortTextField.getText().trim());
 					userId = userIDTextField.getText().trim();
+					currentUserLabel.setText(userId);
+
 					try {
 						connectServer();
 
@@ -668,6 +638,20 @@ ddddddddddddddddd
 		getContentPane().add(panelStack.peek());
 		getContentPane().validate();
 		getContentPane().repaint();
+	}
+
+	private void setFont(Component component, int style, float size) {
+		try {
+			InputStream inputStream = new BufferedInputStream(new FileInputStream("fonts/배스킨라빈스 R.ttf"));
+			Font font = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+			component.setFont(font.deriveFont(style, size));
+		} catch (FontFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
