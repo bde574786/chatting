@@ -226,7 +226,6 @@ public class Server extends JFrame implements ActionListener {
 
 		@Override
 		public void run() {
-			broadcast("UserData_Updata/ok");
 			while (true) {
 				try {
 					String message = dataInputStream.readUTF();
@@ -234,16 +233,24 @@ public class Server extends JFrame implements ActionListener {
 					inMessage(message);
 				} catch (Exception e) {
 					try {
-						// 접속 끊긴 유저가 들어가있던 방 있으면 다 나가기 해주기
-						broadcast("UserOut/" + this.userId);
-						broadcast("UserData_Update/ok");
-						
-						
 						textArea.append(this.userId + " : 사용자접속끊어짐\n");
 						dataOutputStream.close();
 						dataInputStream.close();
 						userSocket.close();
 						userVectorList.remove(this);
+						for (RoomInformation roomInfo : roomVectorList) {
+							for (String  myRoom : myRoomVectorList) {
+								if(roomInfo.roomName.equals(myRoom))
+								{
+									roomInfo.roomUserVectorList.remove(this);
+									//roomInfo.removeRoom(this);
+								}
+							}
+						}
+						// 접속 끊긴 유저가 들어가있던 방 있으면 다 나가기 해주기
+						broadcast("UserOut/" + this.userId);
+						broadcast("UserData_Update/ok");	
+						RemoveEmptyRoom();
 						
 
 						break;
@@ -258,6 +265,7 @@ public class Server extends JFrame implements ActionListener {
 		}
 
 		private void inMessage(String str) {
+
 			StringTokenizer stringTokenizer = new StringTokenizer(str, "/");
 
 			String protocol = stringTokenizer.nextToken();
@@ -332,15 +340,7 @@ public class Server extends JFrame implements ActionListener {
 						roomInfo.roomBroadcast("Chatting/" + userId + "/" + msg);
 					}
 				}
-			} else if(protocol.equals("UserOutLeaveRoom")) {
-				for (RoomInformation roomInfo : roomVectorList) {
-					if(roomInfo.roomUserVectorList.size()==0)
-					{
-						roomVectorList.remove(roomInfo);
-						sendMessage("EmptyRoom/"+roomInfo.roomName);
-					}
-				}
-			}
+			} 
 		}
 
 		private void sendMessage(String message) {
@@ -410,6 +410,20 @@ public class Server extends JFrame implements ActionListener {
 		for (int i = 0; i < userVectorList.size(); i++) {
 			UserInformation userInfo = userVectorList.elementAt(i);
 			userInfo.sendMessage(string);
+		}
+	}
+	public void RemoveEmptyRoom()
+	{
+		if(roomVectorList.size() !=0)
+		{
+			for (RoomInformation roomInfo : roomVectorList) {
+				if(roomInfo.roomUserVectorList.size()==0)
+				{
+					roomVectorList.remove(roomInfo);
+					broadcast("EmptyRoom/"+roomInfo.roomName);
+				}
+			}
+			
 		}
 	}
 
