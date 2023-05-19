@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -165,7 +166,7 @@ public class Server extends JFrame implements ActionListener {
 		private String userId;
 		private String currentRoomName;
 		private Socket userSocket;
-
+		private Vector<String> myRoomVectorList = new Vector<String>();
 		private boolean roomCheck = true;
 
 		public UserInformation(Socket socket) {
@@ -233,17 +234,17 @@ public class Server extends JFrame implements ActionListener {
 					inMessage(message);
 				} catch (Exception e) {
 					try {
-					
-						userVectorList.remove(this);
-						userSocket.close();
-
 						// 접속 끊긴 유저가 들어가있던 방 있으면 다 나가기 해주기
 						broadcast("UserOut/" + this.userId);
-						broadcast("UserData_Updata/ok");
-
+						broadcast("UserData_Update/ok");
+						
+						
 						textArea.append(this.userId + " : 사용자접속끊어짐\n");
 						dataOutputStream.close();
 						dataInputStream.close();
+						userSocket.close();
+						userVectorList.remove(this);
+						
 
 						break;
 					} catch (IOException e1) {
@@ -292,7 +293,7 @@ public class Server extends JFrame implements ActionListener {
 				}
 
 			} else if (protocol.equals("JoinRoom")) {
-				boolean isAlreadyIn = false;
+				myRoomVectorList.add(message);
 				for (int i = 0; i < roomVectorList.size(); i++) {
 					RoomInformation roomInfo = roomVectorList.elementAt(i);
 					if (roomInfo.roomName.equals(message)) {
@@ -313,6 +314,7 @@ public class Server extends JFrame implements ActionListener {
 
 				}
 			} else if (protocol.equals("LeaveRoomOK")) {
+				myRoomVectorList.remove(message);
 				for (int i = 0; i < roomVectorList.size(); i++) {
 					RoomInformation roomInfo = roomVectorList.elementAt(i);
 					if (roomInfo.roomName.equals(message)) {
@@ -330,22 +332,13 @@ public class Server extends JFrame implements ActionListener {
 						roomInfo.roomBroadcast("Chatting/" + userId + "/" + msg);
 					}
 				}
-			} else if (protocol.equals("UserOutLeaveRoom")) {
-				if(roomVectorList.size()>0)
-				{
-					for (RoomInformation roomInfo : roomVectorList) {
-						for (UserInformation userInfo : roomInfo.roomUserVectorList) {
-							if(userInfo.userId.equals(message))
-							{
-								roomInfo.removeRoom(userInfo);
-								break;
-							}
-							
-						}
-						
-						
+			} else if(protocol.equals("UserOutLeaveRoom")) {
+				for (RoomInformation roomInfo : roomVectorList) {
+					if(roomInfo.roomUserVectorList.size()==0)
+					{
+						roomVectorList.remove(roomInfo);
+						sendMessage("EmptyRoom/"+roomInfo.roomName);
 					}
-					
 				}
 			}
 		}
