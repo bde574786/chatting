@@ -18,7 +18,7 @@
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/gitbash-F05032?style=for-the-badge&logo=git&logoColor=white"></p>
 <br>
 
-### 
+### Panel Management
 - Stack 자료구조를 이용한 패널 관리
 - 현재 패널을 Stack에 push로 추가하고 peek로 조회
 - 뒤로가기 버튼 클릭 시 현재 패널을 pop으로 삭제 후 다음 상위 패널 peek로 조회
