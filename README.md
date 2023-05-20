@@ -8,10 +8,14 @@
 <br>
 
 ### Tech
-<center><img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=eclipseide&logoColor=white"><img src="https://img.shields.io/badge/Java Swing-2C2255?style=for-the-badge&logo=eclipseide&logoColor=white"></center>
-<br>
-<center><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/gitbash-F05032?style=for-the-badge&logo=git&logoColor=white"></center>
+<p align="center">
+<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=eclipseide&logoColor=white"><img src="https://img.shields.io/badge/Java Swing-2C2255?style=for-the-badge&logo=eclipseide&logoColor=white"></p>
+<p align="center">
+<img src="https://img.shields.io/badge/Socket%20Communication-Implemented-success.svg?style=for-the-badge"></p>
+<p align="center"><img src="https://img.shields.io/badge/Multi--Threading-Implemented-blue.svg?style=for-the-badge"></p>
 
+<p align="center">
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/gitbash-F05032?style=for-the-badge&logo=git&logoColor=white"></p>
 <br>
 
 ### 패널 동작 방식
