@@ -2,6 +2,7 @@
 
 ### Feature 
 - 소켓 통신을 이용한 자바 멀티 쓰레딩 채팅 프로그램
+- GUI 개발을 위해 개발 툴킷으로 Java Swing 채택
 - 유쾌한 채팅방이라는 의미에서 프로그램 이름을 YouChaeTalk으로 선정  
 
 <br>
@@ -18,12 +19,62 @@
 
 ![패널관리](https://github.com/bde574786/chatting/assets/102010541/31509a1e-3dcd-415a-a073-9cfe7155be62)
 
+<br>
+<br>
 
-![서버 실행과 User 접속](https://github.com/bde574786/chatting/assets/102010541/491e2781-694a-449f-8d86-f4ac81a050fb)
-![아이디 중복 확인](https://github.com/bde574786/chatting/assets/102010541/378078bf-9587-40f9-aa4b-fa165b172752)
-![쪽지 보내기](https://github.com/bde574786/chatting/assets/102010541/59d52c44-637b-4c8d-a7ba-43bcf29e4347)
-![채팅방 생성](https://github.com/bde574786/chatting/assets/102010541/0b670903-1377-410d-8a2c-e85115207a24)
-![채팅하기](https://github.com/bde574786/chatting/assets/102010541/7ede3593-abbd-483e-819b-56a9386b0c01)
-![유저 종료 시 해당 유저 삭제   빈 방이 되면 방 삭제](https://github.com/bde574786/chatting/assets/102010541/4fea8d63-b6f8-44d3-b5d9-3688be5a70a6)
-![방 나가기와 비어있는 방 삭제](https://github.com/bde574786/chatting/assets/102010541/f292bf3b-ac62-4264-9c5d-7f09f062cb0c)
+### Fuction
+- 서버 실행과 User 접속  
+&#10148; title에 환영 메세지 전시
+![서버 실행과 User 접속](https://github.com/bde574786/chatting/assets/102010541/5678b01d-4184-4b42-ab36-5f2cc893d828)
+
+<br>
+
+- 아이디 중복 확인  
+&#10148; title에 아이디 중복 알림
+![User 아이디 중복 확인](https://github.com/bde574786/chatting/assets/102010541/b70b2edf-d459-4ed2-af8b-7fddbe84ec68)
+
+<br>
+
+- 쪽지 보내기
+![쪽지 보내기](https://github.com/bde574786/chatting/assets/102010541/d9fb6deb-9191-467f-b087-e2a4178f1616)
+
+<br>
+
+- 채팅방 생성  
+&#10148; 생성 즉시 방으로 입장
+![방 만들기](https://github.com/bde574786/chatting/assets/102010541/ddb9cf12-fdeb-40fe-b837-f9da4302441c)
+
+<br>
+
+- 채팅방 중복 확인
+![채팅방 중복 확인](https://github.com/bde574786/chatting/assets/102010541/5c2489de-f4da-41a7-a95d-e7c94ec24345)
+
+<br>
+
+- 방 입장하기
+![방 입장하기](https://github.com/bde574786/chatting/assets/102010541/fc09a2f3-4713-4068-b087-e0ec954e64fd)
+
+<br>
+
+- 채팅하기
+&#10148; 방에 속한 모든 User에게 전송
+![채팅하기](https://github.com/bde574786/chatting/assets/102010541/380ffa01-6010-4e2c-bcae-20f7fa8f378e)
+
+<br>
+
+- 방 나가기  
+&#10148; 나간 방이 비어있다면 해당 방 삭제
+![방 나가기](https://github.com/bde574786/chatting/assets/102010541/6084e9e9-2c8c-45ba-84d7-9838480dd1c1)
+
+<br>
+
+- User 종료 시 해당 유저 삭제  
+&#10148; 종료한 User가 속해 있던 방이 빈 방이 되면 방 삭제
+![User 종료](https://github.com/bde574786/chatting/assets/102010541/6fb1ae8f-14de-4e96-bef6-63cd1bb03c7d)
+
+<br>
+<hr/>
+
+### Review
+
 
