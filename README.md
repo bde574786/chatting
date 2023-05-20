@@ -8,8 +8,9 @@
 <br>
 
 ### Tech
-<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=eclipseide&logoColor=white"><img src="https://img.shields.io/badge/Java Swing-2C2255?style=for-the-badge&logo=eclipseide&logoColor=white"><br>
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/gitbash-F05032?style=for-the-badge&logo=git&logoColor=white">
+<center><img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=eclipseide&logoColor=white"><img src="https://img.shields.io/badge/Java Swing-2C2255?style=for-the-badge&logo=eclipseide&logoColor=white"></center>
+<br>
+<center><img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/gitbash-F05032?style=for-the-badge&logo=git&logoColor=white"></center>
 
 <br>
 
