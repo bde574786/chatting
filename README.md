@@ -62,7 +62,7 @@
 
 <br>
 
-- 채팅하기
+- 채팅하기  
 &#10148; 방에 속한 모든 User에게 전송
 ![채팅하기](https://github.com/bde574786/chatting/assets/102010541/380ffa01-6010-4e2c-bcae-20f7fa8f378e)
 
