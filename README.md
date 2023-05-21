@@ -30,7 +30,7 @@
 
 ### Fuction
 - 서버 실행과 User 접속  
-&#10148; title에 환영 메지 전시
+&#10148; title에 환영 메시지 전시
 ![서버 실행과 User 접속](https://github.com/bde574786/chatting/assets/102010541/5678b01d-4184-4b42-ab36-5f2cc893d828)
 
 <br>
@@ -38,6 +38,11 @@
 - 아이디 중복 확인  
 &#10148; title에 아이디 중복 알림
 ![User 아이디 중복 확인](https://github.com/bde574786/chatting/assets/102010541/b70b2edf-d459-4ed2-af8b-7fddbe84ec68)
+
+<br>
+
+- UserList와 RoomList 스크롤  
+![UserList와 RoomList 스크롤](https://github.com/bde574786/chatting/assets/102010541/8314cd58-10f2-4c46-8e38-142cb8e9f3be)
 
 <br>
 
